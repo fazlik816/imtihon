@@ -1,0 +1,52 @@
+/* ==========================================================================
+   teachers.css — pages/public/teachers.html
+   ========================================================================== */
+
+.teachers-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+  flex-wrap: wrap;
+}
+
+.teachers-toolbar__search {
+  flex: 1;
+  max-width: 480px;
+  min-width: 240px;
+}
+
+.teachers-filter-chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.teachers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1280px) {
+  .teachers-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1024px) {
+  .teachers-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .teachers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.teachers-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}

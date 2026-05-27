@@ -1,0 +1,627 @@
+/* ==========================================================================
+   landing.css — index.html (bosh sahifa / landing) stillari
+   ========================================================================== */
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.landing-hero {
+  padding-block: var(--space-10) var(--space-11);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-50) 0%,
+    var(--color-accent-50) 100%
+  );
+  overflow: hidden;
+}
+
+.landing-hero__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: var(--space-9);
+  width: 100%;
+  max-width: var(--container-2xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.landing-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.landing-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  align-self: flex-start;
+  padding: var(--space-2) var(--space-4);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-primary-100);
+  color: var(--color-primary-700);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-xs);
+}
+
+.landing-hero__eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-success-500);
+  border-radius: 50%;
+}
+
+.landing-hero__title {
+  font-size: var(--font-size-5xl);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.landing-hero__title-accent {
+  color: var(--color-primary-600);
+  display: block;
+}
+
+.landing-hero__subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+  max-width: 540px;
+  margin: 0;
+}
+
+.landing-hero__cta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.landing-hero__highlights {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-primary-100);
+  flex-wrap: wrap;
+}
+
+.landing-hero__highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  font-weight: var(--font-weight-medium);
+}
+
+.landing-hero__highlight-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-success-600);
+}
+
+.landing-hero__visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-hero__image {
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+}
+
+@media (max-width: 1024px) {
+  .landing-hero__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  .landing-hero__title {
+    font-size: var(--font-size-4xl);
+  }
+  .landing-hero__visual {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-hero {
+    padding-block: var(--space-7) var(--space-8);
+  }
+  .landing-hero__title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* ==========================================================================
+   STATS — 4 ta statistika
+   ========================================================================== */
+.landing-stats {
+  margin-top: calc(-1 * var(--space-9));
+  position: relative;
+  z-index: 2;
+}
+
+.landing-stats__inner {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.landing-stats__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  background-color: var(--color-white);
+  padding: var(--space-7);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.stat-card__icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-600);
+  flex-shrink: 0;
+}
+
+.stat-card__icon-box--accent {
+  background-color: var(--color-accent-50);
+  color: var(--color-accent-600);
+}
+.stat-card__icon-box--success {
+  background-color: var(--color-success-50);
+  color: var(--color-success-600);
+}
+.stat-card__icon-box--warning {
+  background-color: var(--color-warning-50);
+  color: var(--color-warning-600);
+}
+
+.stat-card__icon {
+  width: 28px;
+  height: 28px;
+}
+
+.stat-card__value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text);
+  line-height: 1.1;
+}
+
+.stat-card__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+@media (max-width: 1024px) {
+  .landing-stats__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .landing-stats__grid {
+    grid-template-columns: 1fr;
+    padding: var(--space-5);
+  }
+}
+
+/* ==========================================================================
+   COURSES — 8 ta mashhur kurs
+   ========================================================================== */
+.landing-courses__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.landing-courses__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-8);
+}
+
+@media (max-width: 1280px) {
+  .landing-courses__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 1024px) {
+  .landing-courses__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .landing-courses__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   WHY US — 6 ta xususiyat
+   ========================================================================== */
+.landing-why__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: var(--transition-all);
+}
+
+.feature-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-200);
+}
+
+.feature-card__icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-500),
+    var(--color-primary-700)
+  );
+  color: var(--color-white);
+  margin-bottom: var(--space-2);
+}
+
+.feature-card__icon-box--accent {
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-500),
+    var(--color-accent-700)
+  );
+}
+.feature-card__icon-box--success {
+  background: linear-gradient(135deg, var(--color-success-500), #047857);
+}
+.feature-card__icon-box--warning {
+  background: linear-gradient(
+    135deg,
+    var(--color-warning-500),
+    var(--color-warning-700)
+  );
+}
+.feature-card__icon-box--danger {
+  background: linear-gradient(
+    135deg,
+    var(--color-danger-500),
+    var(--color-danger-700)
+  );
+}
+.feature-card__icon-box--info {
+  background: linear-gradient(135deg, #06b6d4, #0e7490);
+}
+
+.feature-card__icon {
+  width: 28px;
+  height: 28px;
+}
+
+.feature-card__title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  margin: 0;
+}
+
+.feature-card__description {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .landing-why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .landing-why__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   TEACHERS — 6 ta o'qituvchi
+   ========================================================================== */
+.landing-teachers__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1024px) {
+  .landing-teachers__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .landing-teachers__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   TESTIMONIALS — 3 ta sharhli karusel
+   ========================================================================== */
+.landing-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.testimonial-card__quote-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-primary-200);
+}
+
+.testimonial-card__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.testimonial-card__star {
+  width: 18px;
+  height: 18px;
+  color: var(--color-warning-500);
+}
+
+.testimonial-card__text {
+  font-size: var(--font-size-md);
+  color: var(--color-gray-700);
+  line-height: var(--line-height-relaxed);
+  font-style: italic;
+  margin: 0;
+}
+
+.testimonial-card__person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.testimonial-card__person-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-card__person-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.testimonial-card__person-role {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.landing-testimonials__controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.carousel-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-white);
+  border-radius: var(--radius-full);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  transition: var(--transition-all);
+}
+
+.carousel-arrow:hover {
+  background-color: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: var(--color-white);
+}
+
+.carousel-arrow__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-gray-300);
+  border-radius: 50%;
+  transition: var(--transition-all);
+  cursor: pointer;
+}
+
+.carousel-dot.is-active {
+  width: 28px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-primary-600);
+}
+
+@media (max-width: 1024px) {
+  .landing-testimonials__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   FAQ
+   ========================================================================== */
+.landing-faq__inner {
+  max-width: 800px;
+}
+
+/* ==========================================================================
+   CTA BANNER
+   ========================================================================== */
+.landing-cta {
+  padding-block: var(--space-10);
+}
+
+.landing-cta__inner {
+  width: 100%;
+  max-width: var(--container-xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.landing-cta__banner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-9) var(--space-8);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-600) 0%,
+    var(--color-accent-600) 100%
+  );
+  border-radius: var(--radius-2xl);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.landing-cta__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.landing-cta__title {
+  font-size: var(--font-size-3xl);
+  color: var(--color-white);
+  margin: 0;
+}
+
+.landing-cta__description {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: var(--line-height-relaxed);
+  max-width: 520px;
+  margin: 0;
+}
+
+.landing-cta__buttons {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.landing-cta__buttons .btn--primary {
+  background-color: var(--color-white);
+  color: var(--color-primary-700);
+  border-color: var(--color-white);
+}
+
+.landing-cta__buttons .btn--primary:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-primary-800);
+}
+
+.landing-cta__buttons .btn--outline {
+  background-color: transparent;
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.landing-cta__buttons .btn--outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-white);
+}
+
+.landing-cta__visual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.landing-cta__image {
+  max-width: 100%;
+  border-radius: var(--radius-xl);
+}
+
+@media (max-width: 1024px) {
+  .landing-cta__banner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: var(--space-7);
+  }
+  .landing-cta__visual {
+    display: none;
+  }
+  .landing-cta__buttons {
+    justify-content: center;
+  }
+  .landing-cta__title {
+    font-size: var(--font-size-2xl);
+  }
+}

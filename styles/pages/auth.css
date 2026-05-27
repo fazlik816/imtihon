@@ -1,0 +1,421 @@
+/* ==========================================================================
+   auth.css — pages/auth/login.html va pages/auth/register.html uchun umumiy
+   ========================================================================== */
+
+/* Asosiy 2 ustunli layout */
+.auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  background-color: var(--color-white);
+}
+
+/* ==========================================================================
+   CHAP UST — Brend bloki (illustratsiya + gradient)
+   ========================================================================== */
+.auth__brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-9) var(--space-8);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-600) 0%,
+    var(--color-accent-700) 100%
+  );
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.auth__brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  align-self: flex-start;
+}
+
+.auth__brand-logo:hover {
+  text-decoration: none;
+}
+
+.auth__brand-logo-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.auth__brand-logo-text {
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.auth__brand-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 480px;
+}
+
+.auth__brand-title {
+  font-size: var(--font-size-3xl);
+  color: var(--color-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.auth__brand-subtitle {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: var(--line-height-relaxed);
+  margin: 0;
+}
+
+.auth__brand-image {
+  width: 100%;
+  max-width: 480px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  margin-top: var(--space-5);
+}
+
+.auth__brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.auth__brand-feature {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.auth__brand-feature-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.auth__brand-feature-icon svg {
+  width: 14px;
+  height: 14px;
+  color: var(--color-white);
+}
+
+.auth__brand-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth__brand-footer-link {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: var(--font-weight-medium);
+}
+
+.auth__brand-footer-link:hover {
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   O'NG UST — Forma bloki
+   ========================================================================== */
+.auth__form-side {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-7) var(--space-8);
+  overflow-y: auto;
+}
+
+.auth__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.auth__top-logo {
+  display: none;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.auth__top-logo-icon {
+  width: 36px;
+  height: 36px;
+}
+.auth__top-logo-text {
+  font-family: var(--font-family-heading);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+}
+
+.auth__home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+  transition: var(--transition-colors);
+  margin-left: auto;
+}
+
+.auth__home-link:hover {
+  color: var(--color-primary-600);
+  text-decoration: none;
+}
+.auth__home-link-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.auth__main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Asosiy karta */
+.auth-card {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.auth-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.auth-card__title {
+  font-size: var(--font-size-2xl);
+  margin: 0;
+}
+
+.auth-card__subtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   AUTH FORMA
+   ========================================================================== */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.auth-form__row--single {
+  grid-template-columns: 1fr;
+}
+
+.auth-form__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin: var(--space-1) 0 var(--space-2);
+}
+
+.auth-form__forgot {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-600);
+}
+
+.auth-form__forgot:hover {
+  color: var(--color-primary-700);
+}
+
+.auth-form__submit {
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 768px) {
+  .auth-form__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   DIVIDER ("Yoki")
+   Real elementlar bilan — ::before/::after EMAS
+   ========================================================================== */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-block: var(--space-3);
+}
+
+.auth-divider__line {
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.auth-divider__text {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+}
+
+/* ==========================================================================
+   IJTIMOIY TARMOQLAR ORQALI KIRISH
+   ========================================================================== */
+.auth-social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.auth-social__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-800);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-all);
+  min-height: 44px;
+}
+
+.auth-social__btn:hover {
+  background-color: var(--color-gray-50);
+  border-color: var(--color-gray-400);
+  text-decoration: none;
+  color: var(--color-gray-900);
+}
+
+.auth-social__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.auth-social__btn--apple {
+  background-color: var(--color-gray-900);
+  color: var(--color-white);
+  border-color: var(--color-gray-900);
+}
+
+.auth-social__btn--apple:hover {
+  background-color: var(--color-black);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
+.auth-social__btn--apple .auth-social__icon {
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   FOOTER LINK
+   ========================================================================== */
+.auth-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-3);
+}
+
+.auth-footer__link {
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-semibold);
+}
+
+.auth-footer__link:hover {
+  color: var(--color-primary-700);
+}
+
+/* ==========================================================================
+   FORMA VALIDATSIYA QO'SHIMCHASI
+   ========================================================================== */
+.form-field__success {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-success-700);
+  font-weight: var(--font-weight-medium);
+}
+
+.form-field__success-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* Tablet — chap brand bloki yashirinadi */
+@media (max-width: 1024px) {
+  .auth {
+    grid-template-columns: 1fr;
+  }
+  .auth__brand {
+    display: none;
+  }
+  .auth__top-logo {
+    display: inline-flex;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .auth__form-side {
+    padding: var(--space-5) var(--space-4);
+  }
+  .auth__top {
+    margin-bottom: var(--space-5);
+  }
+  .auth-card__title {
+    font-size: var(--font-size-xl);
+  }
+  .auth-social {
+    grid-template-columns: 1fr;
+  }
+}

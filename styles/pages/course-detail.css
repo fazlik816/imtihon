@@ -1,0 +1,538 @@
+/* ==========================================================================
+   course-detail.css — pages/public/course-detail.html
+   ========================================================================== */
+
+/* Course banner — yuqori qismdagi katta ko'rinish */
+.course-banner {
+  padding-block: var(--space-9);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-700) 0%,
+    var(--color-accent-700) 100%
+  );
+  color: var(--color-white);
+}
+
+.course-banner__inner {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-2xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.course-banner__breadcrumb {
+  margin-bottom: var(--space-5);
+}
+
+.course-banner__breadcrumb .breadcrumb__link {
+  color: rgba(255, 255, 255, 0.75);
+}
+.course-banner__breadcrumb .breadcrumb__link:hover {
+  color: var(--color-white);
+}
+.course-banner__breadcrumb .breadcrumb__item--current {
+  color: var(--color-white);
+}
+.course-banner__breadcrumb .breadcrumb__separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.course-banner__badges {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.course-banner__title {
+  font-size: var(--font-size-4xl);
+  color: var(--color-white);
+  margin: 0 0 var(--space-4);
+  line-height: 1.15;
+}
+
+.course-banner__description {
+  font-size: var(--font-size-md);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 var(--space-5);
+  line-height: var(--line-height-relaxed);
+  max-width: 640px;
+}
+
+.course-banner__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.course-banner__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.course-banner__meta-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.course-banner__teacher {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-5);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.course-banner__teacher-info {
+  display: flex;
+  flex-direction: column;
+}
+.course-banner__teacher-label {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.6);
+}
+.course-banner__teacher-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Banner side card — narx va CTA */
+.course-banner__card {
+  background-color: var(--color-white);
+  color: var(--color-text);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+
+.course-banner__card-media {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.course-banner__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.course-banner__card-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.course-banner__card-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.course-banner__card-price-new {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text);
+}
+
+.course-banner__card-price-old {
+  font-size: var(--font-size-md);
+  color: var(--color-text-subtle);
+  text-decoration: line-through;
+}
+
+.course-banner__card-feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.course-banner__card-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+.course-banner__card-feature-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-success-600);
+  flex-shrink: 0;
+}
+
+.course-banner__card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+@media (max-width: 1024px) {
+  .course-banner__inner {
+    grid-template-columns: 1fr;
+  }
+  .course-banner__title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* Detail content with tabs */
+.course-detail__inner {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-8);
+  width: 100%;
+  max-width: var(--container-2xl);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.course-detail__main {
+  min-width: 0;
+}
+
+.course-detail__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-4));
+  align-self: flex-start;
+}
+
+.course-detail__sidebar-card {
+  padding: var(--space-5);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.course-detail__sidebar-title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-text-muted);
+  margin: 0 0 var(--space-4);
+}
+
+.course-detail__skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 1024px) {
+  .course-detail__inner {
+    grid-template-columns: 1fr;
+  }
+  .course-detail__sidebar {
+    position: relative;
+    top: 0;
+  }
+}
+
+/* Description content */
+.course-description__title {
+  font-size: var(--font-size-xl);
+  margin: 0 0 var(--space-4);
+}
+.course-description__text {
+  color: var(--color-gray-700);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--space-4);
+}
+
+.course-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  margin-block: var(--space-5);
+}
+
+.course-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+.course-feature__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-success-600);
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .course-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Curriculum (Dastur) */
+.curriculum-summary {
+  display: flex;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+
+.curriculum-summary__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.curriculum-summary__icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-primary-600);
+}
+
+.lesson-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  list-style: none;
+  margin: 0;
+}
+
+.lesson-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.lesson-item:last-child {
+  border-bottom: none;
+}
+
+.lesson-item__number {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.lesson-item__title {
+  flex: 1;
+  color: var(--color-gray-800);
+}
+.lesson-item__duration {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+/* Teacher block */
+.course-teacher-block {
+  display: flex;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+}
+
+.course-teacher-block__avatar {
+  flex-shrink: 0;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.course-teacher-block__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.course-teacher-block__name {
+  font-size: var(--font-size-lg);
+  margin: 0 0 var(--space-1);
+}
+.course-teacher-block__role {
+  color: var(--color-primary-600);
+  font-size: var(--font-size-sm);
+  margin: 0 0 var(--space-3);
+}
+.course-teacher-block__bio {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin: 0;
+  line-height: var(--line-height-relaxed);
+}
+
+@media (max-width: 640px) {
+  .course-teacher-block {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Reviews */
+.reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-6);
+}
+
+.reviews-summary__score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.reviews-summary__number {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--color-text);
+  line-height: 1;
+}
+.reviews-summary__stars {
+  display: flex;
+  gap: 2px;
+  margin-top: var(--space-2);
+  color: var(--color-warning-500);
+}
+.reviews-summary__stars svg {
+  width: 16px;
+  height: 16px;
+}
+.reviews-summary__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.reviews-summary__bars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.reviews-bar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+.reviews-bar-row__label {
+  width: 60px;
+  color: var(--color-text-muted);
+}
+.reviews-bar-row__bar {
+  flex: 1;
+}
+.reviews-bar-row__count {
+  width: 40px;
+  text-align: right;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.review-item {
+  padding: var(--space-5);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.review-item__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.review-item__name {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+}
+.review-item__date {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+.review-item__rating {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  color: var(--color-warning-500);
+}
+.review-item__rating svg {
+  width: 14px;
+  height: 14px;
+}
+.review-item__text {
+  color: var(--color-gray-700);
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-relaxed);
+}
+
+@media (max-width: 640px) {
+  .reviews-summary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Similar courses */
+.similar-courses {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+@media (max-width: 1280px) {
+  .similar-courses {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  .similar-courses {
+    grid-template-columns: 1fr;
+  }
+}

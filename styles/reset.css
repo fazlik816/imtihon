@@ -1,0 +1,130 @@
+/* ==========================================================================
+   Modern CSS Reset (Andy Bell uslubida)
+   Manba: https://piccalil.li/blog/a-more-modern-css-reset/
+   ========================================================================== */
+
+/* Box sizing barcha elementlar uchun border-box */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Standart margin va paddingni olib tashlash */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+/* role atributiga ega ro'yxatlardan standart stilni olib tashlash */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* HTML uchun asosiy ko'rinish */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Body uchun asosiy ko'rinish */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+
+/* Sarlavhalar uchun zichroq qator balandligi */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+/* Paragraflar uchun yaxshi o'qish */
+p {
+  text-wrap: pretty;
+}
+
+/* Rasmlar uchun standart sozlash */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Form elementlari uchun font merosi */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Linklar uchun standart underline olib tashlash */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Tugmalar uchun standart stillarni olib tashlash */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Inputlar uchun outline olib tashlash (custom focus stillari qo'llaniladi) */
+input,
+textarea,
+select,
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+/* Jadval elementlari uchun standart sozlash */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Foydalanuvchi animatsiyalarni kamaytirishni so'ragan bo'lsa */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

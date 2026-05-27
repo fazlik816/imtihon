@@ -1,0 +1,230 @@
+/* ==========================================================================
+   components-demo.css — FAQAT pages/components-demo.html uchun layout.
+   Komponentlar katalogining tarkibi shu yerda joylashtiriladi.
+   Keyinroq bu fayl va u bilan birga demo sahifa o'chiriladi.
+   ========================================================================== */
+
+.demo-body {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  background-color: var(--color-bg-subtle);
+}
+
+/* Sidebar nav */
+.demo-sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--color-white);
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-6) var(--space-5);
+}
+
+.demo-sidebar__title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-4);
+  padding-left: var(--space-3);
+}
+
+.demo-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.demo-sidebar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+  border-radius: var(--radius-sm);
+  transition: var(--transition-colors);
+}
+
+.demo-sidebar__link:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-gray-900);
+  text-decoration: none;
+}
+
+.demo-sidebar__index {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+  width: 20px;
+  text-align: right;
+}
+
+/* Main content */
+.demo-main {
+  padding: var(--space-7) var(--space-8);
+  max-width: 1200px;
+}
+
+.demo-page-header {
+  margin-bottom: var(--space-9);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-page-header__eyebrow {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-4);
+}
+
+.demo-page-header__title {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-3);
+}
+
+.demo-page-header__description {
+  font-size: var(--font-size-md);
+  color: var(--color-text-muted);
+}
+
+/* Bo'limlar */
+.demo-section {
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.demo-section:last-child {
+  border-bottom: none;
+}
+
+.demo-section__header {
+  margin-bottom: var(--space-6);
+}
+
+.demo-section__number {
+  display: inline-block;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-xs);
+  color: var(--color-primary-600);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-2);
+}
+
+.demo-section__title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-2);
+}
+
+.demo-section__description {
+  color: var(--color-text-muted);
+}
+
+/* Variant podloglar */
+.demo-subsection {
+  margin-bottom: var(--space-7);
+}
+
+.demo-subsection:last-child {
+  margin-bottom: 0;
+}
+
+.demo-subsection__title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+  color: var(--color-gray-500);
+  margin-bottom: var(--space-4);
+}
+
+/* Komponent ko'rsatma quti */
+.demo-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-6);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.demo-stage--column {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.demo-stage--center {
+  justify-content: center;
+}
+
+.demo-stage--dark {
+  background-color: var(--color-gray-900);
+}
+
+.demo-stage--padded {
+  padding: var(--space-8);
+}
+
+.demo-stage--no-border {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+}
+
+/* Grid layoutlar */
+.demo-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.demo-grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.demo-grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.demo-grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* Modal demo ichi uchun */
+.demo-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .demo-body {
+    grid-template-columns: 1fr;
+  }
+
+  .demo-sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .demo-main {
+    padding: var(--space-6) var(--space-5);
+  }
+}
