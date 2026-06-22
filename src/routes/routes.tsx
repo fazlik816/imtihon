@@ -1,8 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../components/layouts/RootLayout";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import HomePage from "../pages/HomePage";
+import {
+  Home,
+  Login,
+  Register,
+  Courses,
+  CourseDetail,
+  Teachers,
+  About,
+  Contact,
+  Groups,
+  GroupDetail,
+  AddGroup,
+  Students,
+  StudentProfile,
+  Blog,
+  BlogDetail,
+  NotFound,
+} from "../pages";
+import ProtectedRoute from "./protected.route.tsx";
 
 const router = createBrowserRouter([
   {
@@ -10,26 +26,77 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <Home />,
+      },
+      {
+        path: "/courses",
+        element: <Courses />,
+      },
+      {
+        path: "/courses/:id",
+        element: <CourseDetail />,
+      },
+      {
+        path: "/teachers",
+        element: <Teachers />,
       },
       {
         path: "/about",
-        element: <h1>About</h1>,
+        element: <About />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/groups",
+        element: <Groups />,
+      },
+      {
+        path: "/groups/:id",
+        element: <GroupDetail />,
+      },
+      {
+        path: "/groups/add",
+        element: <AddGroup />,
+      },
+      {
+        path: "/students",
+        element: <Students />,
+      },
+      {
+        path: "/students/:id",
+        element: <StudentProfile />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetail />,
       },
     ],
   },
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <ProtectedRoute>
+        <Login />,
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <ProtectedRoute>
+        <Register />,
+      </ProtectedRoute>
+    ),
   },
   {
     path: "*",
-    element: <h1>Not Found</h1>,
+    element: <NotFound />,
   },
 ]);
-
 export default router;
