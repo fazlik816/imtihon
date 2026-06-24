@@ -1,5 +1,5 @@
-import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import { UserRole } from "@prisma/client";
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { UserRole } from '@prisma/client';
 
 export interface JwtPayload {
   sub: string; // user id

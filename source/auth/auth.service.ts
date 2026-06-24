@@ -5,22 +5,18 @@ import {
   Logger,
   NotFoundException,
   UnauthorizedException,
-} from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { JwtService } from "@nestjs/jwt";
-import * as bcrypt from "bcrypt";
-import { randomBytes } from "crypto";
-import { User, UserRole } from "@prisma/client";
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { randomBytes } from 'crypto';
+import { User, UserRole } from '@prisma/client';
 
-import { PrismaService } from "../prisma/prisma.service";
-import { RegisterDto } from "./dto/register.dto";
-import { LoginDto } from "./dto/login.dto";
-import {
-  AuthResponseDto,
-  AuthTokensDto,
-  AuthUserDto,
-} from "./dto/auth-response.dto";
-import { JwtPayload } from "../common/decorators/current-user.decorator";
+import { PrismaService } from '../prisma/prisma.service';
+import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { AuthResponseDto, AuthTokensDto, AuthUserDto } from './dto/auth-response.dto';
+import { JwtPayload } from '../common/decorators/current-user.decorator';
 
 interface SessionMeta {
   ipAddress?: string;
@@ -41,10 +37,7 @@ export class AuthService {
   // ============================================================
   // REGISTER (default role: student)
   // ============================================================
-  async register(
-    dto: RegisterDto,
-    meta: SessionMeta = {},
-  ): Promise<AuthResponseDto> {
+  async register(dto: RegisterDto, meta: SessionMeta = {}): Promise<AuthResponseDto> {
     const existing = await this.prisma.user.findFirst({
       where: { OR: [{ email: dto.email }, { phone: dto.phone }] },
       select: { id: true, email: true, phone: true },
@@ -53,12 +46,10 @@ export class AuthService {
       if (existing.email === dto.email) {
         throw new ConflictException("Bu email allaqachon ro'yxatdan o'tgan");
       }
-      throw new ConflictException(
-        "Bu telefon raqami allaqachon ro'yxatdan o'tgan",
-      );
+      throw new ConflictException("Bu telefon raqami allaqachon ro'yxatdan o'tgan");
     }
 
-    const rounds = this.config.get<number>("app.bcryptRounds") ?? 12;
+    const rounds = this.config.get<number>('app.bcryptRounds') ?? 12;
     const passwordHash = await bcrypt.hash(dto.password, rounds);
 
     const studentId = await this.generateStudentId();
@@ -81,9 +72,6 @@ export class AuthService {
         data: {
           userId: created.id,
           studentId,
-          parentFirstName: "",
-          parentLastName: "",
-          parentPhone: "",
           enrolledAt: new Date(),
         },
       });
@@ -101,7 +89,7 @@ export class AuthService {
   // LOGIN (email yoki telefon orqali)
   // ============================================================
   async login(dto: LoginDto, meta: SessionMeta = {}): Promise<AuthResponseDto> {
-    const isEmail = dto.identifier.includes("@");
+    const isEmail = dto.identifier.includes('@');
     const user = await this.prisma.user.findFirst({
       where: isEmail ? { email: dto.identifier } : { phone: dto.identifier },
     });
@@ -109,7 +97,7 @@ export class AuthService {
     if (!user || user.deletedAt) {
       throw new UnauthorizedException("Email/telefon yoki parol noto'g'ri");
     }
-    if (user.status !== "active") {
+    if (user.status !== 'active') {
       throw new UnauthorizedException(`Hisob holati: ${user.status}`);
     }
 
@@ -130,19 +118,14 @@ export class AuthService {
   // ============================================================
   // REFRESH
   // ============================================================
-  async refresh(
-    refreshToken: string,
-    meta: SessionMeta = {},
-  ): Promise<AuthTokensDto> {
+  async refresh(refreshToken: string, meta: SessionMeta = {}): Promise<AuthTokensDto> {
     let payload: JwtPayload;
     try {
       payload = await this.jwtService.verifyAsync<JwtPayload>(refreshToken, {
-        secret: this.config.get<string>("jwt.refreshSecret"),
+        secret: this.config.get<string>('jwt.refreshSecret'),
       });
     } catch {
-      throw new UnauthorizedException(
-        "Refresh token noto'g'ri yoki muddati tugagan",
-      );
+      throw new UnauthorizedException("Refresh token noto'g'ri yoki muddati tugagan");
     }
 
     const session = await this.prisma.session.findUnique({
@@ -150,13 +133,13 @@ export class AuthService {
       include: { user: true },
     });
     if (!session || session.expiresAt < new Date()) {
-      throw new UnauthorizedException("Sessiya topilmadi yoki muddati tugagan");
+      throw new UnauthorizedException('Sessiya topilmadi yoki muddati tugagan');
     }
     if (session.userId !== payload.sub) {
-      throw new UnauthorizedException("Token egasi mos kelmadi");
+      throw new UnauthorizedException('Token egasi mos kelmadi');
     }
-    if (session.user.status !== "active" || session.user.deletedAt) {
-      throw new UnauthorizedException("Hisob faol emas");
+    if (session.user.status !== 'active' || session.user.deletedAt) {
+      throw new UnauthorizedException('Hisob faol emas');
     }
 
     // Rotate: eski sessiyani o'chiramiz, yangisini yaratamiz
@@ -167,16 +150,13 @@ export class AuthService {
   // ============================================================
   // LOGOUT (joriy refresh token bo'yicha sessiyani o'chirish)
   // ============================================================
-  async logout(
-    refreshToken?: string,
-    userId?: string,
-  ): Promise<{ message: string }> {
+  async logout(refreshToken?: string, userId?: string): Promise<{ message: string }> {
     if (refreshToken) {
       await this.prisma.session.deleteMany({ where: { refreshToken } });
     } else if (userId) {
       await this.prisma.session.deleteMany({ where: { userId } });
     }
-    return { message: "Tizimdan muvaffaqiyatli chiqildi" };
+    return { message: 'Tizimdan muvaffaqiyatli chiqildi' };
   }
 
   // ============================================================
@@ -185,7 +165,7 @@ export class AuthService {
   async me(userId: string): Promise<AuthUserDto> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user || user.deletedAt) {
-      throw new NotFoundException("Foydalanuvchi topilmadi");
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
     return this.toAuthUser(user);
   }
@@ -197,13 +177,10 @@ export class AuthService {
     const user = await this.prisma.user.findUnique({ where: { email } });
     // Information leakage'ni oldini olish uchun har doim bir xil javob beramiz
     if (!user || user.deletedAt) {
-      return {
-        message:
-          "Agar bunday email mavjud bo'lsa, parolni tiklash havolasi yuborildi",
-      };
+      return { message: "Agar bunday email mavjud bo'lsa, parolni tiklash havolasi yuborildi" };
     }
 
-    const token = randomBytes(32).toString("hex");
+    const token = randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 soat
 
     await this.prisma.passwordResetToken.create({
@@ -213,27 +190,19 @@ export class AuthService {
     // TODO (Bosqich 6): EmailService orqali yuborish
     this.logger.log(`[DEV] Password reset token uchun ${user.email}: ${token}`);
 
-    return {
-      message:
-        "Agar bunday email mavjud bo'lsa, parolni tiklash havolasi yuborildi",
-    };
+    return { message: "Agar bunday email mavjud bo'lsa, parolni tiklash havolasi yuborildi" };
   }
 
   // ============================================================
   // RESET PASSWORD
   // ============================================================
-  async resetPassword(
-    token: string,
-    newPassword: string,
-  ): Promise<{ message: string }> {
-    const record = await this.prisma.passwordResetToken.findUnique({
-      where: { token },
-    });
+  async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    const record = await this.prisma.passwordResetToken.findUnique({ where: { token } });
     if (!record || record.usedAt || record.expiresAt < new Date()) {
       throw new BadRequestException("Token noto'g'ri yoki muddati tugagan");
     }
 
-    const rounds = this.config.get<number>("app.bcryptRounds") ?? 12;
+    const rounds = this.config.get<number>('app.bcryptRounds') ?? 12;
     const passwordHash = await bcrypt.hash(newPassword, rounds);
 
     await this.prisma.$transaction([
@@ -249,16 +218,14 @@ export class AuthService {
       this.prisma.session.deleteMany({ where: { userId: record.userId } }),
     ]);
 
-    return { message: "Parol muvaffaqiyatli yangilandi" };
+    return { message: 'Parol muvaffaqiyatli yangilandi' };
   }
 
   // ============================================================
   // VERIFY EMAIL
   // ============================================================
   async verifyEmail(token: string): Promise<{ message: string }> {
-    const record = await this.prisma.emailVerificationToken.findUnique({
-      where: { token },
-    });
+    const record = await this.prisma.emailVerificationToken.findUnique({ where: { token } });
     if (!record || record.usedAt || record.expiresAt < new Date()) {
       throw new BadRequestException("Token noto'g'ri yoki muddati tugagan");
     }
@@ -274,36 +241,27 @@ export class AuthService {
       }),
     ]);
 
-    return { message: "Email muvaffaqiyatli tasdiqlandi" };
+    return { message: 'Email muvaffaqiyatli tasdiqlandi' };
   }
 
   // ============================================================
   // INTERNAL HELPERS
   // ============================================================
 
-  private async issueTokens(
-    user: User,
-    meta: SessionMeta,
-  ): Promise<AuthTokensDto> {
-    const payload: JwtPayload = {
-      sub: user.id,
-      email: user.email,
-      role: user.role,
-    };
+  private async issueTokens(user: User, meta: SessionMeta): Promise<AuthTokensDto> {
+    const payload: JwtPayload = { sub: user.id, email: user.email, role: user.role };
 
     const accessToken = await this.jwtService.signAsync(payload, {
-      secret: this.config.get<string>("jwt.secret"),
-      expiresIn: this.config.get<string>("jwt.expiresIn") ?? "15m",
+      secret: this.config.get<string>('jwt.secret'),
+      expiresIn: this.config.get<string>('jwt.expiresIn') ?? '15m',
     });
 
     const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: this.config.get<string>("jwt.refreshSecret"),
-      expiresIn: this.config.get<string>("jwt.refreshExpiresIn") ?? "7d",
+      secret: this.config.get<string>('jwt.refreshSecret'),
+      expiresIn: this.config.get<string>('jwt.refreshExpiresIn') ?? '7d',
     });
 
-    const expiresAt = this.computeExpiry(
-      this.config.get<string>("jwt.refreshExpiresIn") ?? "7d",
-    );
+    const expiresAt = this.computeExpiry(this.config.get<string>('jwt.refreshExpiresIn') ?? '7d');
 
     await this.prisma.session.create({
       data: {
@@ -319,15 +277,13 @@ export class AuthService {
     return {
       accessToken,
       refreshToken,
-      expiresIn: this.parseDurationToSeconds(
-        this.config.get<string>("jwt.expiresIn") ?? "15m",
-      ),
-      tokenType: "Bearer",
+      expiresIn: this.parseDurationToSeconds(this.config.get<string>('jwt.expiresIn') ?? '15m'),
+      tokenType: 'Bearer',
     };
   }
 
   private async createEmailVerificationToken(userId: string): Promise<string> {
-    const token = randomBytes(32).toString("hex");
+    const token = randomBytes(32).toString('hex');
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 soat
     await this.prisma.emailVerificationToken.create({
       data: { userId, token, expiresAt },
@@ -339,14 +295,14 @@ export class AuthService {
   private async generateStudentId(): Promise<string> {
     // ST-0001 dan boshlab inkrement
     const last = await this.prisma.student.findFirst({
-      orderBy: { studentId: "desc" },
+      orderBy: { studentId: 'desc' },
       select: { studentId: true },
     });
     let next = 1;
-    if (last?.studentId.startsWith("ST-")) {
+    if (last?.studentId.startsWith('ST-')) {
       next = parseInt(last.studentId.slice(3), 10) + 1;
     }
-    return `ST-${String(next).padStart(4, "0")}`;
+    return `ST-${String(next).padStart(4, '0')}`;
   }
 
   private toAuthUser(user: User): AuthUserDto {
@@ -369,12 +325,7 @@ export class AuthService {
     if (!m) return 900;
     const value = parseInt(m[1], 10);
     const unit = m[2];
-    const multipliers: Record<string, number> = {
-      s: 1,
-      m: 60,
-      h: 3600,
-      d: 86400,
-    };
+    const multipliers: Record<string, number> = { s: 1, m: 60, h: 3600, d: 86400 };
     return value * (multipliers[unit] ?? 1);
   }
 

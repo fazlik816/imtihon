@@ -1,7 +1,7 @@
-import { Module } from "@nestjs/common";
-import { PublicService } from "./public.service";
-import { PublicController } from "./public.controller";
-import { CoursesModule } from "../courses/courses.module";
+import { Module } from '@nestjs/common';
+import { PublicService } from './public.service';
+import { PublicController } from './public.controller';
+import { CoursesModule } from '../courses/courses.module';
 
 @Module({
   imports: [CoursesModule],

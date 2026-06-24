@@ -1,14 +1,14 @@
-import { ApiPropertyOptional, PartialType, OmitType } from "@nestjs/swagger";
-import { CreateStudentDto } from "./create-student.dto";
-import { IsEnum, IsOptional } from "class-validator";
-import { UserStatus } from "@prisma/client";
+import { ApiPropertyOptional, PartialType, OmitType } from '@nestjs/swagger';
+import { CreateStudentDto } from './create-student.dto';
+import { IsEnum, IsOptional } from 'class-validator';
+import { UserStatus } from '@prisma/client';
 
 export class UpdateStudentDto extends PartialType(
-  OmitType(CreateStudentDto, ["password"] as const),
+  OmitType(CreateStudentDto, ['password'] as const),
 ) {
   @ApiPropertyOptional({
     enum: UserStatus,
-    description: "Foydalanuvchi holati",
+    description: 'Foydalanuvchi holati',
   })
   @IsOptional()
   @IsEnum(UserStatus)

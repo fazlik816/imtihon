@@ -1,19 +1,19 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsEnum, IsInt, IsOptional, IsUUID, Max, Min } from "class-validator";
-import { PaymentMethod, PaymentStatus } from "@prisma/client";
-import { PaginationDto } from "../../common/dto/pagination.dto";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsEnum, IsInt, IsOptional, IsUUID, Max, Min } from 'class-validator';
+import { PaymentMethod, PaymentStatus } from '@prisma/client';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
 export class QueryPaymentsDto extends PaginationDto {
-  @ApiPropertyOptional({ format: "uuid" })
+  @ApiPropertyOptional({ format: 'uuid' })
   @IsOptional()
   @IsUUID()
   studentId?: string;
 
-  @ApiPropertyOptional({ format: "uuid" })
+  @ApiPropertyOptional({ format: 'uuid' })
   @IsOptional()
   @IsUUID()
-  groupId?: string;
+  courseId?: string;
 
   @ApiPropertyOptional({ enum: PaymentStatus })
   @IsOptional()
@@ -37,7 +37,7 @@ export class QueryPaymentsDto extends PaginationDto {
     example: 9,
     minimum: 1,
     maximum: 12,
-    description: "Year bilan birga ishlatiladi",
+    description: 'Year bilan birga ishlatiladi',
   })
   @IsOptional()
   @Type(() => Number)

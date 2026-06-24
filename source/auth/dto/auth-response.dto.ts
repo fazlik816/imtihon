@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { UserRole, UserStatus } from "@prisma/client";
+import { ApiProperty } from '@nestjs/swagger';
+import { UserRole, UserStatus } from '@prisma/client';
 
 export class AuthUserDto {
   @ApiProperty() id!: string;
@@ -11,16 +11,15 @@ export class AuthUserDto {
   @ApiProperty() lastName!: string;
   @ApiProperty({ required: false, nullable: true }) middleName?: string | null;
   @ApiProperty({ required: false, nullable: true }) avatarUrl?: string | null;
-  @ApiProperty({ required: false, nullable: true })
-  emailVerifiedAt?: Date | null;
+  @ApiProperty({ required: false, nullable: true }) emailVerifiedAt?: Date | null;
 }
 
 export class AuthTokensDto {
   @ApiProperty() accessToken!: string;
   @ApiProperty() refreshToken!: string;
-  @ApiProperty({ description: "Access token muddati (sekundlarda)" })
+  @ApiProperty({ description: 'Access token muddati (sekundlarda)' })
   expiresIn!: number;
-  @ApiProperty({ default: "Bearer" })
+  @ApiProperty({ default: 'Bearer' })
   tokenType!: string;
 }
 

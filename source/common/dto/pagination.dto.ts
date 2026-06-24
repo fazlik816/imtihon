@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsInt, IsOptional, IsString, Max, Min, IsIn } from "class-validator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsInt, IsOptional, IsString, Max, Min, IsIn } from 'class-validator';
 
 export class PaginationDto {
   @ApiPropertyOptional({ default: 1, minimum: 1 })
@@ -18,15 +18,15 @@ export class PaginationDto {
   @Max(100)
   limit?: number = 20;
 
-  @ApiPropertyOptional({ description: "Saralash maydoni" })
+  @ApiPropertyOptional({ description: 'Saralash maydoni' })
   @IsOptional()
   @IsString()
   sortBy?: string;
 
-  @ApiPropertyOptional({ enum: ["asc", "desc"], default: "desc" })
+  @ApiPropertyOptional({ enum: ['asc', 'desc'], default: 'desc' })
   @IsOptional()
-  @IsIn(["asc", "desc"])
-  order?: "asc" | "desc" = "desc";
+  @IsIn(['asc', 'desc'])
+  order?: 'asc' | 'desc' = 'desc';
 
   @ApiPropertyOptional({ description: "Qisman moslik bo'yicha qidiruv" })
   @IsOptional()

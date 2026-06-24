@@ -1,20 +1,11 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import {
-  IsBoolean,
-  IsEnum,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-} from "class-validator";
-import { CourseLevel, CourseStatus } from "@prisma/client";
-import { PaginationDto } from "../../common/dto/pagination.dto";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { CourseLevel, CourseStatus } from '@prisma/client';
+import { PaginationDto } from '../../common/dto/pagination.dto';
 
 export class QueryCoursesDto extends PaginationDto {
-  @ApiPropertyOptional({
-    description: "Toifa bo'yicha (frontend, backend, design, ...)",
-  })
+  @ApiPropertyOptional({ description: "Toifa bo'yicha (frontend, backend, design, ...)" })
   @IsOptional()
   @IsString()
   category?: string;
@@ -26,7 +17,7 @@ export class QueryCoursesDto extends PaginationDto {
 
   @ApiPropertyOptional({
     enum: CourseStatus,
-    description: "Faqat admin uchun (public: status=active)",
+    description: 'Faqat admin uchun (public: status=active)',
   })
   @IsOptional()
   @IsEnum(CourseStatus)
@@ -46,7 +37,7 @@ export class QueryCoursesDto extends PaginationDto {
   @Min(0)
   priceMax?: number;
 
-  @ApiPropertyOptional({ description: "Faqat featured kurslar" })
+  @ApiPropertyOptional({ description: 'Faqat featured kurslar' })
   @IsOptional()
   @Type(() => Boolean)
   @IsBoolean()

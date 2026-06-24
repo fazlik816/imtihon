@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { Prisma, StudentStatus, TeacherStatus } from "@prisma/client";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InstructorStatus, Prisma, ReviewStatus, StudentStatus } from '@prisma/client';
 
-import { PrismaService } from "../prisma/prisma.service";
-import { paginate, PaginationDto } from "../common/dto/pagination.dto";
-import { CoursesService } from "../courses/courses.service";
-import { QueryCoursesDto } from "../courses/dto/query-courses.dto";
+import { PrismaService } from '../prisma/prisma.service';
+import { paginate, PaginationDto } from '../common/dto/pagination.dto';
+import { CoursesService } from '../courses/courses.service';
+import { QueryCoursesDto } from '../courses/dto/query-courses.dto';
 
 @Injectable()
 export class PublicService {
@@ -20,92 +20,146 @@ export class PublicService {
     return this.coursesService.list(q, { includeAllStatuses: false });
   }
 
-  courseBySlug(slug: string) {
-    return this.coursesService.findBySlug(slug, { includeAllStatuses: false });
+  async courseBySlug(slug: string) {
+    const course = await this.coursesService.findBySlug(slug, { includeAllStatuses: false });
+
+    const reviews = await this.prisma.review.findMany({
+      where: { courseId: course.id, status: ReviewStatus.approved },
+      orderBy: { createdAt: 'desc' },
+      take: 20,
+      select: {
+        rating: true,
+        text: true,
+        createdAt: true,
+        student: {
+          select: { user: { select: { firstName: true, lastName: true, avatarUrl: true } } },
+        },
+      },
+    });
+
+    return { ...course, reviews };
   }
 
   // ============================================================
-  // TEACHERS (faqat active + ommaviy maydonlar)
+  // INSTRUCTORS (faqat active + ommaviy maydonlar)
   // ============================================================
-  async listTeachers(q: PaginationDto) {
-    const where: Prisma.TeacherWhereInput = {
-      status: TeacherStatus.active,
-      user: { deletedAt: null, status: "active" },
+  async listInstructors(q: PaginationDto) {
+    const where: Prisma.InstructorWhereInput = {
+      status: InstructorStatus.active,
+      user: { deletedAt: null, status: 'active' },
     };
     if (q.search) {
       where.OR = [
-        { specialty: { contains: q.search, mode: "insensitive" } },
-        { user: { firstName: { contains: q.search, mode: "insensitive" } } },
-        { user: { lastName: { contains: q.search, mode: "insensitive" } } },
+        { specialty: { contains: q.search, mode: 'insensitive' } },
+        { user: { firstName: { contains: q.search, mode: 'insensitive' } } },
+        { user: { lastName: { contains: q.search, mode: 'insensitive' } } },
       ];
     }
 
     const [items, total] = await this.prisma.$transaction([
-      this.prisma.teacher.findMany({
+      this.prisma.instructor.findMany({
         where,
         skip: q.skip,
         take: q.take,
-        orderBy: { rating: "desc" },
-        select: this.publicTeacherSelect(),
+        orderBy: { rating: 'desc' },
+        select: this.publicInstructorSelect(),
       }),
-      this.prisma.teacher.count({ where }),
+      this.prisma.instructor.count({ where }),
     ]);
 
     return paginate(
-      items.map((t) => this.flattenTeacher(t)),
+      items.map((t) => this.flattenInstructor(t)),
       total,
       q.page ?? 1,
       q.limit ?? 20,
     );
   }
 
-  async teacherById(id: string) {
-    const teacher = await this.prisma.teacher.findFirst({
+  async instructorById(id: string) {
+    const instructor = await this.prisma.instructor.findFirst({
       where: {
         id,
-        status: TeacherStatus.active,
-        user: { deletedAt: null, status: "active" },
+        status: InstructorStatus.active,
+        user: { deletedAt: null, status: 'active' },
       },
-      select: this.publicTeacherSelect(),
+      select: {
+        ...this.publicInstructorSelect(),
+        courses: {
+          where: { status: 'active' },
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            imageUrl: true,
+            rating: true,
+            studentsCount: true,
+          },
+        },
+      },
     });
-    if (!teacher) throw new NotFoundException("O'qituvchi topilmadi");
-    return this.flattenTeacher(teacher);
+    if (!instructor) throw new NotFoundException("O'qituvchi topilmadi");
+    return this.flattenInstructor(instructor);
   }
 
   // ============================================================
   // STATS (landing sahifa uchun)
   // ============================================================
   async stats() {
-    const [students, teachers, courses] = await this.prisma.$transaction([
-      this.prisma.student.count({
-        where: {
-          status: StudentStatus.active,
-          user: { deletedAt: null },
-        },
-      }),
-      this.prisma.teacher.count({
-        where: {
-          status: TeacherStatus.active,
-          user: { deletedAt: null },
-        },
-      }),
-      this.prisma.course.count({ where: { status: "active" } }),
-    ]);
+    const [students, graduates, instructors, courses, certificates] =
+      await this.prisma.$transaction([
+        this.prisma.student.count({
+          where: { status: StudentStatus.active, user: { deletedAt: null } },
+        }),
+        this.prisma.student.count({
+          where: { status: StudentStatus.graduated, user: { deletedAt: null } },
+        }),
+        this.prisma.instructor.count({
+          where: { status: InstructorStatus.active, user: { deletedAt: null } },
+        }),
+        this.prisma.course.count({ where: { status: 'active' } }),
+        this.prisma.certificate.count({ where: { status: 'issued' } }),
+      ]);
 
-    const graduates = await this.prisma.student.count({
-      where: { status: StudentStatus.graduated },
+    return { students, graduates, instructors, courses, certificates };
+  }
+
+  // ============================================================
+  // TESTIMONIALS (landing — barcha tasdiqlangan sharhlar)
+  // ============================================================
+  async testimonials(limit = 9) {
+    const take = Math.min(Math.max(limit, 1), 30);
+    const reviews = await this.prisma.review.findMany({
+      where: { status: ReviewStatus.approved, text: { not: null } },
+      orderBy: [{ rating: 'desc' }, { createdAt: 'desc' }],
+      take,
+      select: {
+        rating: true,
+        text: true,
+        createdAt: true,
+        course: { select: { id: true, name: true, slug: true } },
+        student: {
+          select: { user: { select: { firstName: true, lastName: true, avatarUrl: true } } },
+        },
+      },
     });
 
-    return { students, teachers, courses, graduates };
+    return reviews.map((r) => ({
+      rating: r.rating,
+      text: r.text,
+      createdAt: r.createdAt,
+      course: r.course,
+      name: `${r.student.user.firstName} ${r.student.user.lastName}`,
+      avatarUrl: r.student.user.avatarUrl,
+    }));
   }
 
   // ============================================================
   // INTERNAL
   // ============================================================
-  private publicTeacherSelect() {
+  private publicInstructorSelect() {
     return {
       id: true,
-      teacherId: true,
+      instructorId: true,
       specialty: true,
       experience: true,
       bio: true,
@@ -119,10 +173,10 @@ export class PublicService {
           avatarUrl: true,
         },
       },
-    } satisfies Prisma.TeacherSelect;
+    } satisfies Prisma.InstructorSelect;
   }
 
-  private flattenTeacher(
+  private flattenInstructor(
     t: {
       user: {
         firstName: string;

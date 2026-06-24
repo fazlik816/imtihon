@@ -1,6 +1,6 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsString } from "class-validator";
-import { PaymentStatus } from "@prisma/client";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
+import { PaymentStatus } from '@prisma/client';
 
 export class UpdatePaymentStatusDto {
   @ApiProperty({ enum: PaymentStatus })

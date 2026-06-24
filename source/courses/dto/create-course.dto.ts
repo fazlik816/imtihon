@@ -1,5 +1,5 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsBoolean,
@@ -9,17 +9,33 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  IsUUID,
   Matches,
   Min,
   MinLength,
   ValidateNested,
-} from "class-validator";
-import { CourseLevel, CourseStatus } from "@prisma/client";
+} from 'class-validator';
+import { CourseLevel, CourseStatus } from '@prisma/client';
 
 export class CreateCourseLessonDto {
   @ApiProperty() @IsString() @MinLength(1) title!: string;
   @ApiProperty({ example: 90 }) @IsInt() @Min(0) durationMinutes!: number;
   @ApiProperty({ example: 1 }) @IsInt() @Min(0) order!: number;
+
+  @ApiPropertyOptional({ example: 'https://cdn.example.com/lesson-1.mp4' })
+  @IsOptional()
+  @IsString()
+  videoUrl?: string;
+
+  @ApiPropertyOptional({ description: 'Dars matni / tavsifi' })
+  @IsOptional()
+  @IsString()
+  content?: string;
+
+  @ApiPropertyOptional({ default: false, description: "Bepul ko'rsa bo'ladigan dars" })
+  @IsOptional()
+  @IsBoolean()
+  isPreview?: boolean;
 }
 
 export class CreateCourseModuleDto {
@@ -35,34 +51,29 @@ export class CreateCourseModuleDto {
 }
 
 export class CreateCourseDto {
-  @ApiProperty({ example: "Frontend Bootcamp" })
+  @ApiProperty({ example: 'Frontend Bootcamp' })
   @IsString()
   @MinLength(2)
   name!: string;
 
-  @ApiProperty({
-    example: "frontend-bootcamp",
-    description: "URL-friendly slug",
-  })
+  @ApiProperty({ example: 'frontend-bootcamp', description: 'URL-friendly slug' })
   @IsString()
   @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
     message: "Slug faqat kichik harf/raqam va '-' bo'lishi mumkin",
   })
   slug!: string;
 
-  @ApiProperty({ example: "HTML, CSS, JavaScript va React" })
+  @ApiProperty({ example: 'HTML, CSS, JavaScript va React' })
   @IsString()
   @MinLength(10)
   description!: string;
 
-  @ApiProperty({
-    example: "To'liq frontend yo'nalishi: HTML, CSS, JS, React, Next.js...",
-  })
+  @ApiProperty({ example: "To'liq frontend yo'nalishi: HTML, CSS, JS, React, Next.js..." })
   @IsString()
   @MinLength(20)
   longDescription!: string;
 
-  @ApiProperty({ example: "frontend" })
+  @ApiProperty({ example: 'frontend' })
   @IsString()
   category!: string;
 
@@ -87,19 +98,29 @@ export class CreateCourseDto {
   @Min(1)
   durationMonths!: number;
 
-  @ApiPropertyOptional({
-    example: 0,
-    description: "Auto-computed agar lessons berilsa",
-  })
+  @ApiPropertyOptional({ example: 0, description: 'Auto-computed agar lessons berilsa' })
   @IsOptional()
   @IsInt()
   @Min(0)
   lessonsCount?: number;
 
-  @ApiPropertyOptional({ example: "/uploads/courses/abc.jpg" })
+  @ApiPropertyOptional({ example: '/uploads/courses/abc.jpg' })
   @IsOptional()
   @IsString()
   imageUrl?: string;
+
+  @ApiPropertyOptional({
+    example: 'https://cdn.example.com/preview.mp4',
+    description: 'Kurs intro videosi',
+  })
+  @IsOptional()
+  @IsString()
+  previewVideoUrl?: string;
+
+  @ApiPropertyOptional({ description: "O'qituvchi (instructor) ID" })
+  @IsOptional()
+  @IsUUID()
+  instructorId?: string;
 
   @ApiPropertyOptional({ default: false })
   @IsOptional()
@@ -113,7 +134,7 @@ export class CreateCourseDto {
 
   @ApiPropertyOptional({
     type: [CreateCourseModuleDto],
-    description: "Modullar + ichidagi darslar",
+    description: 'Modullar + ichidagi darslar',
   })
   @IsOptional()
   @IsArray()

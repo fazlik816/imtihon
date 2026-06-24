@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEnum,
@@ -7,19 +7,19 @@ import {
   IsPositive,
   IsString,
   IsUUID,
-} from "class-validator";
-import { PaymentMethod, PaymentStatus } from "@prisma/client";
+} from 'class-validator';
+import { PaymentMethod, PaymentStatus } from '@prisma/client';
 
 export class CreatePaymentDto {
-  @ApiProperty({ format: "uuid" })
+  @ApiProperty({ format: 'uuid' })
   @IsUUID()
   studentId!: string;
 
-  @ApiProperty({ format: "uuid" })
+  @ApiProperty({ format: 'uuid', description: 'Sotib olinayotgan kurs' })
   @IsUUID()
-  groupId!: string;
+  courseId!: string;
 
-  @ApiProperty({ example: 500000 })
+  @ApiProperty({ example: 690000 })
   @IsNumber()
   @IsPositive()
   amount!: number;
@@ -33,16 +33,10 @@ export class CreatePaymentDto {
   @IsEnum(PaymentStatus)
   status?: PaymentStatus;
 
-  @ApiPropertyOptional({
-    description: "To'lov sanasi (paid bo'lsa avto: hozir)",
-  })
+  @ApiPropertyOptional({ description: "To'lov sanasi (paid bo'lsa avto: hozir)" })
   @IsOptional()
   @IsDateString()
   paidAt?: string;
-
-  @ApiProperty({ example: "2026-10-01" })
-  @IsDateString()
-  dueDate!: string;
 
   @ApiPropertyOptional({ description: "Tashqi to'lov tizimi tranzaksiya IDsi" })
   @IsOptional()

@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsDateString,
   IsEmail,
@@ -7,22 +7,19 @@ import {
   IsString,
   Matches,
   MinLength,
-} from "class-validator";
-import { Gender, StudentStatus } from "@prisma/client";
+} from 'class-validator';
+import { Gender, StudentStatus } from '@prisma/client';
 
 export class CreateStudentDto {
-  // ===== USER ma'lumotlari =====
-  @ApiProperty({ example: "student2@example.com" })
+  @ApiProperty({ example: 'student2@example.com' })
   @IsEmail()
   email!: string;
 
-  @ApiProperty({ example: "+998901112233" })
-  @Matches(/^\+998\d{9}$/, {
-    message: "Telefon raqami +998XXXXXXXXX formatida bo'lishi kerak",
-  })
+  @ApiProperty({ example: '+998901112233' })
+  @Matches(/^\+998\d{9}$/, { message: "Telefon raqami +998XXXXXXXXX formatida bo'lishi kerak" })
   phone!: string;
 
-  @ApiProperty({ example: "Strong123" })
+  @ApiProperty({ example: 'Strong123' })
   @IsString()
   @MinLength(8)
   @Matches(/(?=.*[A-Z])(?=.*\d)/, {
@@ -30,12 +27,12 @@ export class CreateStudentDto {
   })
   password!: string;
 
-  @ApiProperty({ example: "Aziz" })
+  @ApiProperty({ example: 'Aziz' })
   @IsString()
   @MinLength(2)
   firstName!: string;
 
-  @ApiProperty({ example: "Karimov" })
+  @ApiProperty({ example: 'Karimov' })
   @IsString()
   @MinLength(2)
   lastName!: string;
@@ -45,7 +42,7 @@ export class CreateStudentDto {
   @IsString()
   middleName?: string;
 
-  @ApiPropertyOptional({ example: "2005-06-12" })
+  @ApiPropertyOptional({ example: '2005-06-12' })
   @IsOptional()
   @IsDateString()
   birthDate?: string;
@@ -55,38 +52,12 @@ export class CreateStudentDto {
   @IsEnum(Gender)
   gender?: Gender;
 
-  @ApiPropertyOptional({ example: "Toshkent sh., Yunusobod" })
+  @ApiPropertyOptional({ example: 'Toshkent sh., Yunusobod' })
   @IsOptional()
   @IsString()
   address?: string;
 
-  // ===== STUDENT ma'lumotlari =====
-  @ApiProperty({ example: "Valijon" })
-  @IsString()
-  parentFirstName!: string;
-
-  @ApiProperty({ example: "Karimov" })
-  @IsString()
-  parentLastName!: string;
-
-  @ApiProperty({ example: "+998901112255" })
-  @Matches(/^\+998\d{9}$/)
-  parentPhone!: string;
-
-  @ApiPropertyOptional({ example: "Dilnoza Karimova" })
-  @IsOptional()
-  @IsString()
-  motherName?: string;
-
-  @ApiPropertyOptional({ example: "+998901112277" })
-  @IsOptional()
-  @Matches(/^\+998\d{9}$/)
-  motherPhone?: string;
-
-  @ApiPropertyOptional({
-    example: "2026-09-01",
-    description: "Ro'yxatga olingan sana",
-  })
+  @ApiPropertyOptional({ example: '2026-09-01', description: "Platformaga ro'yxatdan o'tgan sana" })
   @IsOptional()
   @IsDateString()
   enrolledAt?: string;
